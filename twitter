@@ -1,3 +1,23 @@
 #!/bin/sh
 
-echo "$@" > /dev/null 2>&1
+line='pohe'
+isEmpty=0
+isEmptyPrev=0
+
+checkEmpty() {
+    isEmptyPrev=$isEmpty
+    if [ -z "$line" ] ; then
+	isEmpty=1
+    else
+	isEmpty=0
+    fi
+}
+
+if [ $# -eq 0 ] ; then
+    read -r line
+    checkEmpty
+    while [ $isEmpty -eq 0 -o $isEmptyPrev -eq 0 ] ; do
+	read -r line ;
+	checkEmpty ;
+    done
+fi
